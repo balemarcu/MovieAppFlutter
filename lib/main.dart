@@ -1,5 +1,7 @@
+import 'package:demo1/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:demo1/pages/login_page.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: ThemeData(
         primaryColor: const Color.fromARGB(255, 247, 192, 74),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -24,7 +26,27 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const LogInPage(),
+      routerConfig: _router,
     );
   }
 }
+
+final GoRouter _router = GoRouter(
+  initialLocation: '/login',
+  routes: [
+    GoRoute(
+      name: 'login',
+      path: '/login',
+      builder: (context, state) {
+        return const LogInPage();
+      },
+      //routes: []
+    ),
+    GoRoute(
+      name: 'homescreen',
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+      //pageBuilder: (context, state) => MaterialPageRoute(builder: builder),
+    ),
+  ],
+);
