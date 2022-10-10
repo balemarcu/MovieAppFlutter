@@ -1,5 +1,6 @@
 import 'package:demo1/pages/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -11,12 +12,12 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
-    return Theme(data: ThemeData(
-      backgroundColor: Color(0xffE41F2D),
-      brightness: Brightness.dark,
-        primarySwatch: Colors.grey
-    ),
-        child: const LoginContent(),
+    return Theme(
+      data: ThemeData(
+          backgroundColor: Color(0xffE41F2D),
+          brightness: Brightness.dark,
+          primarySwatch: Colors.grey),
+      child: const LoginContent(),
     );
   }
 }
@@ -50,7 +51,8 @@ class LoginContent extends StatelessWidget {
                         decoration: const InputDecoration(
                           labelText: 'Email',
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 1.0),
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white)),
@@ -65,11 +67,14 @@ class LoginContent extends StatelessWidget {
                         decoration: const InputDecoration(
                           labelText: 'Password',
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
                           errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 1)),
                           suffixIcon: Icon(
                             Icons.remove_red_eye_outlined,
                           ),
@@ -79,15 +84,12 @@ class LoginContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 60),
                       child: ElevatedButton(
-                        // style: ElevatedButton.styleFrom(
-                        //     backgroundColor: Color.fromARGB(255, 247, 192, 74)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xfff7c04a),
+                        ),
                         child: const Text('Login'),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreen()),
-                          );
+                          context.goNamed('homescreen');
                         },
                       ),
                     ),
