@@ -8,6 +8,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _pageController = PageController();
+  List<Image> pageViewImages = [
+    Image.asset(
+      'lib/images/carousel_placeholder.png',
+      fit: BoxFit.fill,
+    ),
+    Image.asset('lib/images/carousel_placeholder.png', fit: BoxFit.fill)
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      print('page changed');
+      print(_pageController.page?.toInt());
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,42 +47,125 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.search))
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.only(top: 10),
-        children: [
-          Image.asset(
-            'lib/images/carousel_placeholder.png',
-            fit: BoxFit.fill,
-          ),
-          const HomeScreenCategory(
-            title: 'Stars',
-          ),
-          SizedBox(
-            height: 75,
-            //width: 200,
-            child: ListView.builder(
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  Image.asset('lib/icons/star_icon.png'),
-            ),
-          ),
-          const HomeScreenCategory(
-            title: 'Top Rated Movies',
-          ),
-          SizedBox(
-            height: 170,
-            //width: 200,
-            child: ListView.builder(
-              itemCount: 10,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) =>
-                  Image.asset('lib/icons/top_rated.png'),
-            ),
-          ),
-          const HomeScreen()
-        ],
+      body: ListView.builder(
+        padding: const EdgeInsets.only(top: 16),
+        scrollDirection: Axis.vertical,
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            // return PageView(
+            //   controller: _pageController,
+            //   children: [
+            //     // Container(
+            //     //   height: 200,
+            //     //   width: 400,
+            //     //   child: Image.asset(
+            //     //     'lib/images/carousel_placeholder.png',
+            //     //     fit: BoxFit.fill,
+            //     //   ),
+            //     //),
+            //     // Image.asset('lib/images/carousel_placeholder.png',
+            //     //     fit: BoxFit.fill)
+            //   ],
+            // );
+            // return Image.asset(
+            //   // TODO use view page
+            //   'lib/images/carousel_placeholder.png',
+            //   fit: BoxFit.fill,
+            // );
+            return PageView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: double.infinity,
+                    height: 400,
+                    color: index % 2 == 0 ? Colors.green : Colors.blue[700],
+                  );
+                });
+          } else if (index == 1) {
+            return const HomeScreenCategory(
+              title: 'Stars',
+            );
+          } else if (index == 2) {
+            return SizedBox(
+              height: 75,
+              //width: 200,
+              child: ListView.builder(
+                itemCount: 6,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) =>
+                    Image.asset('lib/icons/star_icon.png'),
+              ),
+            );
+          } else if (index == 3) {
+            return const HomeScreenCategory(
+              title: 'Popular',
+            );
+          } else if (index == 4) {
+            return SizedBox(
+              height: 170,
+              //width: 200,
+              child: ListView.builder(
+                itemCount: 5,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) =>
+                    Image.asset('lib/icons/top_rated.png'),
+              ),
+            );
+          } else {
+            return const HomeScreenCategory(
+              title: 'Coming soon',
+            );
+          }
+        },
       ),
+      // body: ListView(
+      //   padding: const EdgeInsets.only(top: 10),
+      //   children: [
+      //     Image.asset(
+      //       // TODO use view page
+      //       'lib/images/carousel_placeholder.png',
+      //       fit: BoxFit.fill,
+      //     ),
+      //     const HomeScreenCategory(
+      //       title: 'Stars',
+      //     ),
+      //     SizedBox(
+      //       height: 75,
+      //       //width: 200,
+      //       child: ListView.builder(
+      //         itemCount: 10,
+      //         scrollDirection: Axis.horizontal,
+      //         itemBuilder: (context, index) =>
+      //             Image.asset('lib/icons/star_icon.png'),
+      //       ),
+      //     ),
+      //     const HomeScreenCategory(
+      //       title: 'Top Rated Movies',
+      //     ),
+      //     SizedBox(
+      //       height: 170,
+      //       //width: 200,
+      //       child: ListView.builder(
+      //         itemCount: 10,
+      //         scrollDirection: Axis.horizontal,
+      //         itemBuilder: (context, index) =>
+      //             Image.asset('lib/icons/top_rated.png'),
+      //       ),
+      //     ),
+      //     const HomeScreenCategory(title: 'Popular'),
+      //     SizedBox(
+      //       height: 170,
+      //       //width: 200,
+      //       child: ListView.builder(
+      //         itemCount: 10,
+      //         scrollDirection: Axis.horizontal,
+      //         itemBuilder: (context, index) =>
+      //             Image.asset('lib/icons/top_rated.png'),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

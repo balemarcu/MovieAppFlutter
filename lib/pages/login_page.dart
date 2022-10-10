@@ -11,8 +11,25 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
+    return Theme(data: ThemeData(
+      backgroundColor: Color(0xffE41F2D),
+      brightness: Brightness.dark,
+        primarySwatch: Colors.grey
+    ),
+        child: const LoginContent(),
+    );
+  }
+}
+
+class LoginContent extends StatelessWidget {
+  const LoginContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffE41F2D),
+      backgroundColor: Theme.of(context).backgroundColor,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
@@ -29,14 +46,14 @@ class _LogInPageState extends State<LogInPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: TextFormField(
+                        style: const TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
                           labelText: 'Email',
-                          errorText: 'Error message',
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide:
-                                  BorderSide(width: 5, color: Colors.white)),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
                         ),
                       ),
                     ),
@@ -44,14 +61,18 @@ class _LogInPageState extends State<LogInPage> {
                       padding: const EdgeInsets.only(
                           left: 48, right: 48, bottom: 60, top: 16),
                       child: TextFormField(
+                        style: const TextStyle(color: Color(0xffb3b3b3)),
                         decoration: const InputDecoration(
                           labelText: 'Password',
-                          errorText: 'Error message',
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                              borderSide:
-                                  BorderSide(width: 5, color: Colors.white)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white, width: 1)),
+                          suffixIcon: Icon(
+                            Icons.remove_red_eye_outlined,
+                          ),
                         ),
                       ),
                     ),
