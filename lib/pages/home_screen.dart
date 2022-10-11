@@ -1,4 +1,6 @@
+import 'package:demo1/model/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,14 +10,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List moviePosters = [
-    "https://www.indiewire.com/wp-content/uploads/2019/12/ad-astra.jpg?w=500",
-    "https://www.indiewire.com/wp-content/uploads/2019/12/beach_bum.jpg?w=510",
-    "https://www.indiewire.com/wp-content/uploads/2019/12/dark-phoenix.jpg?w=856",
-  ];
+  // List moviePosters = [
+  //   "https://www.indiewire.com/wp-content/uploads/2019/12/ad-astra.jpg?w=500",
+  //   "https://www.indiewire.com/wp-content/uploads/2019/12/beach_bum.jpg?w=510",
+  //   "https://www.indiewire.com/wp-content/uploads/2019/12/dark-phoenix.jpg?w=856",
+  // ];
 
   final _pageController = PageController();
   int _currentIndex = 0;
+  late final List<Widget> tabsList;
 
   List<Image> pageViewImages = [
     Image.asset(
@@ -32,6 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
       print('page changed');
       print(_pageController.page?.toInt());
     });
+
+    tabsList = [
+      const HomeTab(),
+      const FavoritesTab(),
+    ];
   }
 
   @override
@@ -55,79 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.search))
         ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.only(top: 16),
-        scrollDirection: Axis.vertical,
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            // return PageView(
-            //   controller: _pageController,
-            //   children: [
-            //     // Container(
-            //     //   height: 200,
-            //     //   width: 400,
-            //     //   child: Image.asset(
-            //     //     'lib/images/carousel_placeholder.png',
-            //     //     fit: BoxFit.fill,
-            //     //   ),
-            //     //),
-            //     // Image.asset('lib/images/carousel_placeholder.png',
-            //     //     fit: BoxFit.fill)
-            //   ],
-            // );
-            return Image.asset(
-              // TODO use view page
-              'lib/images/carousel_placeholder.png',
-              fit: BoxFit.fill,
-            );
-            // return PageView.builder(
-            //     itemCount: 3,
-            //     itemBuilder: (context, index) {
-            //       // return Container(
-            //       //   width: double.infinity,
-            //       //   height: 400,
-            //       //   color: index % 2 == 0 ? Colors.green : Colors.blue[700],
-            //       // );
-            //     });
-          } else if (index == 1) {
-            return const HomeScreenCategory(
-              title: 'Stars',
-            );
-          } else if (index == 2) {
-            return SizedBox(
-              height: 75,
-              //width: 200,
-              child: ListView.builder(
-                itemCount: 6,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) =>
-                    Image.asset('lib/icons/star_icon.png'),
-              ),
-            );
-          } else if (index == 3) {
-            return const HomeScreenCategory(
-              title: 'Popular',
-            );
-          } else if (index == 4) {
-            return SizedBox(
-              height: 170,
-              //width: 200,
-              child: ListView.builder(
-                  itemCount: moviePosters.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext ctx, int index) {
-                    //Image.asset('lib/icons/top_rated.png'),
-                    return Image.network(moviePosters[index]);
-                  }),
-            );
-          } else {
-            return const HomeScreenCategory(
-              title: 'Coming soon',
-            );
-          }
-        },
-      ),
+      //body: HomeTabWidget(moviePosters: moviePosters),
+      body: tabsList.elementAt(_currentIndex),
+      //TODO nested navigation
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         items: const [
@@ -146,6 +84,103 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
+    );
+  }
+}
+
+class HomeTab extends StatelessWidget {
+  const HomeTab({
+    Key? key,
+    //required this.moviePosters,
+  }) : super(key: key);
+
+  //final List moviePosters;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.only(top: 16),
+      scrollDirection: Axis.vertical,
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Image.asset(
+            // TODO use view page
+            'lib/images/carousel_placeholder.png',
+            fit: BoxFit.fill,
+          );
+          // return PageView.builder(
+          //     itemCount: 3,
+          //     itemBuilder: (context, index) {
+          //       // return Container(
+          //       //   width: double.infinity,
+          //       //   height: 400,
+          //       //   color: index % 2 == 0 ? Colors.green : Colors.blue[700],
+          //       // );
+          //     });
+        } else if (index == 1) {
+          return const HomeScreenCategory(
+            title: 'Stars',
+          );
+        } else if (index == 2) {
+          return SizedBox(
+            height: 75,
+            //width: 200,
+            child: ListView.builder(
+              itemCount: 6,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) =>
+                  Image.asset('lib/icons/star_icon.png'),
+            ),
+          );
+        } else if (index == 3) {
+          return const HomeScreenCategory(
+            title: 'Popular',
+          );
+        } else if (index == 4) {
+          return SizedBox(
+            height: 170,
+            //width: 200,
+            child: ListView.builder(
+                itemCount: movies.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext ctx, int index) {
+                  //Image.asset('lib/icons/top_rated.png'),
+                  final selectedMovie = movies[index];
+                  return GestureDetector(
+                    onTap: () {
+                      context.goNamed('movieDetail', params: <String, String>{
+                        'movieId': selectedMovie.id.toString()
+                      });
+                    },
+                    child: Image.network(selectedMovie.posterPath),
+                  );
+                  //return Image.network(moviePosters[index]);
+                }),
+          );
+        } else {
+          return const HomeScreenCategory(
+            title: 'Coming soon',
+          );
+        }
+      },
+    );
+  }
+}
+
+class FavoritesTab extends StatefulWidget {
+  const FavoritesTab({super.key});
+
+  @override
+  State<FavoritesTab> createState() => _FavoritesTabState();
+}
+
+class _FavoritesTabState extends State<FavoritesTab> {
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Favorites Tab',
+      style: TextStyle(fontSize: 30),
     );
   }
 }

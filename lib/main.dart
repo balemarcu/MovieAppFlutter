@@ -1,4 +1,5 @@
 import 'package:demo1/pages/home_screen.dart';
+import 'package:demo1/pages/movie_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo1/pages/login_page.dart';
 import 'package:go_router/go_router.dart';
@@ -43,10 +44,22 @@ final GoRouter _router = GoRouter(
       //routes: []
     ),
     GoRoute(
-      name: 'homescreen',
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-      //pageBuilder: (context, state) => MaterialPageRoute(builder: builder),
-    ),
+        name: 'homescreen',
+        path: '/',
+        builder: (context, state) => const HomeScreen(),
+        routes: [
+          GoRoute(
+              name: 'movieDetail',
+              path: 'details/:movieId',
+              builder: ((context, state) {
+                return MovieDetails(id: int.parse(state.params['movieId']!));
+              })),
+        ]),
+    // GoRoute(
+    //     name: 'movieDetail',
+    //     path: '/details/:movieId',
+    //     builder: ((context, state) {
+    //       return MovieDetails(id: int.parse(state.params['movieId']!));
+    //     })),
   ],
 );
