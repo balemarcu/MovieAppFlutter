@@ -1,6 +1,8 @@
+import 'package:demo1/model/favoritesMovies.dart';
 import 'package:demo1/model/movie.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,12 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // List moviePosters = [
-  //   "https://www.indiewire.com/wp-content/uploads/2019/12/ad-astra.jpg?w=500",
-  //   "https://www.indiewire.com/wp-content/uploads/2019/12/beach_bum.jpg?w=510",
-  //   "https://www.indiewire.com/wp-content/uploads/2019/12/dark-phoenix.jpg?w=856",
-  // ];
-
   final _pageController = PageController();
   int _currentIndex = 0;
   late final List<Widget> tabsList;
@@ -51,6 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Provider.of<FavoritesModel>(context, listen: false)
+              .add(Movie(id: 1, name: 'Movie 1', posterPath: 'bla bla bla'));
+        },
+      ),
       appBar: AppBar(
         title: const Text('Homescreen'),
         backgroundColor: Colors.red,
@@ -68,13 +70,20 @@ class _HomeScreenState extends State<HomeScreen> {
       //TODO nested navigation
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.access_alarm),
+            icon: Stack(
+              children: [
+                Icon(Icons.access_alarm),
+                Consumer<FavoritesModel>(builder: ((context, value, child) {
+                  return Text(value.favoritesMovies.length.toString());
+                }))
+              ],
+            ),
             label: 'Favorites',
           ),
         ],
@@ -178,10 +187,15 @@ class FavoritesTab extends StatefulWidget {
 class _FavoritesTabState extends State<FavoritesTab> {
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Favorites Tab',
-      style: TextStyle(fontSize: 30),
-    );
+    return Consumer<FavoritesModel>(builder: (context, value, child) {
+      return ListView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: value.favoritesMovies.length,
+        itemBuilder: (context, index) {
+          return Text(value.favoritesMovies[index].name);
+        },
+      );
+    });
   }
 }
 

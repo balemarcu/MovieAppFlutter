@@ -13,7 +13,12 @@ class MovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: Image.network(selectedMovie.posterPath)),
+      body: Column(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+        Image.network(selectedMovie.posterPath),
+            Text(selectedMovie.name)
+
+      ]),
     );
   }
 }
