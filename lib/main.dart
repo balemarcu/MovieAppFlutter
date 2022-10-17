@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:demo1/model/favoritesMovies.dart';
 import 'package:demo1/pages/home_screen.dart';
 import 'package:demo1/pages/movie_detail_page.dart';

@@ -1,5 +1,7 @@
+import 'package:demo1/api/endpoints.dart';
 import 'package:demo1/model/favoritesMovies.dart';
-import 'package:demo1/model/movie.dart';
+import 'package:demo1/model/movie_model_mock.dart';
+import 'package:demo1/pages/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<FavoritesModel>(context, listen: false)
-              .add(Movie(id: 1, name: 'Movie 1', posterPath: 'bla bla bla'));
+          Provider.of<FavoritesModel>(context, listen: false).add(
+              MovieModelMock(
+                  id: 1, name: 'Movie 1', posterPath: 'bla bla bla'));
         },
       ),
       appBar: AppBar(
@@ -147,25 +150,29 @@ class HomeTab extends StatelessWidget {
             title: 'Popular',
           );
         } else if (index == 4) {
-          return SizedBox(
-            height: 170,
-            //width: 200,
-            child: ListView.builder(
-                itemCount: movies.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext ctx, int index) {
-                  //Image.asset('lib/icons/top_rated.png'),
-                  final selectedMovie = movies[index];
-                  return GestureDetector(
-                    onTap: () {
-                      context.goNamed('movieDetail', params: <String, String>{
-                        'movieId': selectedMovie.id.toString()
-                      });
-                    },
-                    child: Image.network(selectedMovie.posterPath),
-                  );
-                  //return Image.network(moviePosters[index]);
-                }),
+          // return SizedBox(
+          //   height: 170,
+          //   //width: 200,
+          //   child: ListView.builder(
+          //       itemCount: movies.length,
+          //       scrollDirection: Axis.horizontal,
+          //       itemBuilder: (BuildContext ctx, int index) {
+          //         //Image.asset('lib/icons/top_rated.png'),
+          //         final selectedMovie = movies[index];
+          //         return GestureDetector(
+          //           onTap: () {
+          //             context.goNamed('movieDetail', params: <String, String>{
+          //               'movieId': selectedMovie.id.toString()
+          //             });
+          //           },
+          //           child: Image.network(selectedMovie.posterPath),
+          //         );
+          //         //return Image.network(moviePosters[index]);
+          //       }),
+          // );
+          return ScrollingMovies(
+            title: 'Popular',
+            api: Endpoints.popularMoviesUrl(1),
           );
         } else {
           return const HomeScreenCategory(
