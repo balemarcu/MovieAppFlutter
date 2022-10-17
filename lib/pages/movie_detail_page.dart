@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../api/api_constants.dart';
 import '../model/movie.dart';
 
 class MovieDetails extends StatefulWidget {
@@ -35,8 +36,9 @@ class _MovieDetailsState extends State<MovieDetails> {
     return Scaffold(
       appBar: AppBar(),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Image.network(selectedMovie!.posterPath!),
-        Text(selectedMovie!.title!)
+        Image.network('${TMDB_BASE_IMAGE_URL}w500/${selectedMovie?.posterPath}' ??
+            'https://docs.flutter.dev/assets/images/docs/development/packages-and-plugins/FlutterFavoriteLogo.png'),
+        Text(selectedMovie?.title ?? 'Title not fetched')
       ]),
     );
   }

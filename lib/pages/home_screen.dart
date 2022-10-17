@@ -1,10 +1,15 @@
 import 'package:demo1/api/endpoints.dart';
+import 'package:demo1/mobx/favourite_movies_store.dart';
 import 'package:demo1/model/favoritesMovies.dart';
 import 'package:demo1/model/movie_model_mock.dart';
 import 'package:demo1/pages/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_mobx/flutter_mobx.dart';
+
+final favouriteMovies = FavouriteMoviesStore();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,9 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          //Provider version
           Provider.of<FavoritesModel>(context, listen: false).add(
               MovieModelMock(
                   id: 1, name: 'Movie 1', posterPath: 'bla bla bla'));
+
+          //Mobx version
+          favouriteMovies.add(MovieModelMock(
+              id: 1, name: 'Movie 1', posterPath: 'bla bla bla'));
         },
       ),
       appBar: AppBar(
@@ -81,10 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Stack(
               children: [
-                Icon(Icons.access_alarm),
-                Consumer<FavoritesModel>(builder: ((context, value, child) {
-                  return Text(value.favoritesMovies.length.toString());
-                }))
+                const Icon(Icons.favorite),
+                //Provider version
+                // Consumer<FavoritesModel>(builder: ((context, value, child) {
+                //   return Text(value.favoritesMovies.length.toString());
+                // }))
+
+                //Mobx version
+                Observer(
+                  builder: (_) =>
+                      Text(favouriteMovies.favoriteMovies.length.toString()),
+                )
               ],
             ),
             label: 'Favorites',
@@ -194,15 +211,36 @@ class FavoritesTab extends StatefulWidget {
 class _FavoritesTabState extends State<FavoritesTab> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoritesModel>(builder: (context, value, child) {
-      return ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: value.favoritesMovies.length,
-        itemBuilder: (context, index) {
-          return Text(value.favoritesMovies[index].name);
-        },
-      );
-    });
+    //Provider version
+    // return Consumer<FavoritesModel>(builder: (context, value, child) {
+    //   return ListView.builder(
+    //     scrollDirection: Axis.vertical,
+    //     itemCount: value.favoritesMovies.length,
+    //     itemBuilder: (context, index) {
+    //       return Text(value.favoritesMovies[index].name);
+    //     },
+    //   );
+    // });
+
+    //Mobx version
+    // return ListView.builder(itemBuilder: (context, index) {
+    //   return Observer(
+    //     builder: (_) => Text(
+    //       favouriteMovies.favoriteMovies[index].name,
+    //       style: Theme.of(context).textTheme.headline4,
+    //     ),
+    //   );
+    // });
+
+    return Observer(
+      builder: (context) => ListView.builder(
+        itemCount: favouriteMovies.favoriteMovies.length,
+        itemBuilder: (_, index) => Text(
+          favouriteMovies.favoriteMovies[index].name,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+      ),
+    );
   }
 }
 

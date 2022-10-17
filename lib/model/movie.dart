@@ -40,7 +40,7 @@ class Movie {
     posterPath = json['poster_path'];
     //originalLanguage = json['original_language'];
     //originalTitle = json['original_title'];
-    genreIds = json['genre_ids'].cast<int>();
+    //genreIds = json['genre_ids'].cast<int>();
     backdropPath = json['backdrop_path'];
     //adult = json['adult'];
     overview = json['overview'];
@@ -80,7 +80,7 @@ class MovieList {
     totalMovies = json['total_results'];
     totalPages = json['total_pages'];
 
-    if(json['results'] != null) {
+    if (json['results'] != null) {
       movies = [];
       json['results'].forEach((v) {
         movies!.add(Movie.fromJson(v));
