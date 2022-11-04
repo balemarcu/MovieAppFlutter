@@ -20,8 +20,11 @@ TokenRequest _$TokenRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TokenRequest {
+  @StringDateTimeConverter()
+  @JsonKey(name: 'expires_at')
+  DateTime get expiresAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'request_token')
   String get value => throw _privateConstructorUsedError;
-  String get expiring_date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +38,12 @@ abstract class $TokenRequestCopyWith<$Res> {
           TokenRequest value, $Res Function(TokenRequest) then) =
       _$TokenRequestCopyWithImpl<$Res, TokenRequest>;
   @useResult
-  $Res call({String value, String expiring_date});
+  $Res call(
+      {@StringDateTimeConverter()
+      @JsonKey(name: 'expires_at')
+          DateTime expiresAt,
+      @JsonKey(name: 'request_token')
+          String value});
 }
 
 /// @nodoc
@@ -51,17 +59,17 @@ class _$TokenRequestCopyWithImpl<$Res, $Val extends TokenRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? expiresAt = null,
     Object? value = null,
-    Object? expiring_date = null,
   }) {
     return _then(_value.copyWith(
+      expiresAt: null == expiresAt
+          ? _value.expiresAt
+          : expiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiring_date: null == expiring_date
-          ? _value.expiring_date
-          : expiring_date // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +83,12 @@ abstract class _$$_TokenRequestCopyWith<$Res>
       __$$_TokenRequestCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String value, String expiring_date});
+  $Res call(
+      {@StringDateTimeConverter()
+      @JsonKey(name: 'expires_at')
+          DateTime expiresAt,
+      @JsonKey(name: 'request_token')
+          String value});
 }
 
 /// @nodoc
@@ -89,17 +102,17 @@ class __$$_TokenRequestCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? expiresAt = null,
     Object? value = null,
-    Object? expiring_date = null,
   }) {
     return _then(_$_TokenRequest(
+      expiresAt: null == expiresAt
+          ? _value.expiresAt
+          : expiresAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
-      expiring_date: null == expiring_date
-          ? _value.expiring_date
-          : expiring_date // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -108,19 +121,27 @@ class __$$_TokenRequestCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TokenRequest implements _TokenRequest {
-  const _$_TokenRequest({required this.value, required this.expiring_date});
+  _$_TokenRequest(
+      {@StringDateTimeConverter()
+      @JsonKey(name: 'expires_at')
+          required this.expiresAt,
+      @JsonKey(name: 'request_token')
+          required this.value});
 
   factory _$_TokenRequest.fromJson(Map<String, dynamic> json) =>
       _$$_TokenRequestFromJson(json);
 
   @override
-  final String value;
+  @StringDateTimeConverter()
+  @JsonKey(name: 'expires_at')
+  final DateTime expiresAt;
   @override
-  final String expiring_date;
+  @JsonKey(name: 'request_token')
+  final String value;
 
   @override
   String toString() {
-    return 'TokenRequest(value: $value, expiring_date: $expiring_date)';
+    return 'TokenRequest(expiresAt: $expiresAt, value: $value)';
   }
 
   @override
@@ -128,14 +149,14 @@ class _$_TokenRequest implements _TokenRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TokenRequest &&
-            (identical(other.value, value) || other.value == value) &&
-            (identical(other.expiring_date, expiring_date) ||
-                other.expiring_date == expiring_date));
+            (identical(other.expiresAt, expiresAt) ||
+                other.expiresAt == expiresAt) &&
+            (identical(other.value, value) || other.value == value));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, value, expiring_date);
+  int get hashCode => Object.hash(runtimeType, expiresAt, value);
 
   @JsonKey(ignore: true)
   @override
@@ -152,17 +173,23 @@ class _$_TokenRequest implements _TokenRequest {
 }
 
 abstract class _TokenRequest implements TokenRequest {
-  const factory _TokenRequest(
-      {required final String value,
-      required final String expiring_date}) = _$_TokenRequest;
+  factory _TokenRequest(
+      {@StringDateTimeConverter()
+      @JsonKey(name: 'expires_at')
+          required final DateTime expiresAt,
+      @JsonKey(name: 'request_token')
+          required final String value}) = _$_TokenRequest;
 
   factory _TokenRequest.fromJson(Map<String, dynamic> json) =
       _$_TokenRequest.fromJson;
 
   @override
-  String get value;
+  @StringDateTimeConverter()
+  @JsonKey(name: 'expires_at')
+  DateTime get expiresAt;
   @override
-  String get expiring_date;
+  @JsonKey(name: 'request_token')
+  String get value;
   @override
   @JsonKey(ignore: true)
   _$$_TokenRequestCopyWith<_$_TokenRequest> get copyWith =>

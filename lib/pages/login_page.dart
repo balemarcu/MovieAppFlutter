@@ -1,6 +1,8 @@
+import 'package:demo1/login/login_view_model.dart';
 import 'package:demo1/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobx/mobx.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -22,10 +24,42 @@ class _LogInPageState extends State<LogInPage> {
   }
 }
 
-class LoginContent extends StatelessWidget {
+class LoginContent extends StatefulWidget {
   const LoginContent({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<LoginContent> createState() => _LoginContentState();
+}
+
+class _LoginContentState extends State<LoginContent> {
+  late final TextEditingController userNameController, passwordController;
+  late final LoginViewModel viewModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userNameController = TextEditingController();
+    passwordController = TextEditingController();
+
+    viewModel = LoginViewModel();
+    when((_) => viewModel.succesLogin, () {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        //context becomes "active"
+        context.goNamed('homescreen');
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +81,7 @@ class LoginContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 48),
                       child: TextFormField(
+                        controller: userNameController,
                         style: const TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
                           labelText: 'Email',
@@ -63,6 +98,7 @@ class LoginContent extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 48, right: 48, bottom: 60, top: 16),
                       child: TextFormField(
+                        controller: passwordController,
                         style: const TextStyle(color: Color(0xffb3b3b3)),
                         decoration: const InputDecoration(
                           labelText: 'Password',
@@ -89,6 +125,8 @@ class LoginContent extends StatelessWidget {
                         ),
                         child: const Text('Login'),
                         onPressed: () {
+                          viewModel.logIn(
+                              userNameController.text, passwordController.text);
                           context.goNamed('homescreen');
                         },
                       ),

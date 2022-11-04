@@ -1,12 +1,18 @@
 import 'package:demo1/model/favoritesMovies.dart';
 import 'package:demo1/pages/home_screen.dart';
 import 'package:demo1/pages/movie_detail_page.dart';
+import 'package:demo1/storage_module/storage_module.dart';
 import 'package:flutter/material.dart';
 import 'package:demo1/pages/login_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final StorageModule storageModule = StorageModule.getInstance();
+
+  await storageModule.initModule();
+
   runApp(ChangeNotifierProvider(
     create: (context) => FavoritesModel(),
     child: const MyApp(),
