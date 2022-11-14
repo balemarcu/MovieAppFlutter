@@ -187,9 +187,9 @@ class HomeTab extends StatelessWidget {
           //         //return Image.network(moviePosters[index]);
           //       }),
           // );
-          return ScrollingMovies(
+          return ScrollingMoviesDio(
             title: 'Popular',
-            api: Endpoints.popularMoviesUrl(1),
+            //api: Endpoints.popularMoviesUrl(1),
           );
         } else {
           return const HomeScreenCategory(
