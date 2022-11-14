@@ -1,9 +1,7 @@
 import 'package:demo1/api/endpoints.dart';
 import 'package:demo1/api/fetch_functions.dart';
-import 'package:demo1/model/movie_model_mock.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../api/api_constants.dart';
 import '../model/movie.dart';
@@ -22,7 +20,6 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchMovie(Endpoints.movieDetailsUrl(widget.id)).then((value) {
       setState(() {

@@ -1,6 +1,7 @@
 import 'package:demo1/login/session.dart';
 import 'package:demo1/login/session_token_api.dart';
 import 'package:demo1/login/token_request.dart';
+import 'package:demo1/main.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,8 +31,7 @@ abstract class _LoginRepository with Store {
   final LoginApi loginApi = LoginApi();
   final GetRequestTokenApi getRequestTokenApi = GetRequestTokenApi();
   final SessionTokenApi newSessionToken = SessionTokenApi();
-  final SharedPreferences sharedPreferences =
-      StorageModule.getInstance().sharedPreferences;
+  final SharedPreferences sharedPreferences = getIt<SharedPreferences>();
 
   Future<bool> login(String username, String password) async {
     try {

@@ -1,22 +1,61 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:demo1/model/favoritesMovies.dart';
+import 'package:demo1/movies/data/movie_dao.dart';
+import 'package:demo1/movies/data/movies_api.dart';
+import 'package:demo1/movies/data/movies_repository.dart';
+import 'package:demo1/movies/presentation/movies_view_model.dart';
+import 'package:demo1/networking/networking.dart';
 import 'package:demo1/pages/home_screen.dart';
 import 'package:demo1/pages/movie_detail_page.dart';
+import 'package:demo1/storage_module/app_database/app_database.dart';
 import 'package:demo1/storage_module/storage_module.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:demo1/pages/login_page.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final StorageModule storageModule = StorageModule.getInstance();
+GetIt getIt = GetIt.instance;
+Future<void> main() async {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await storageModule.initModule();
+    await registerModules();
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => FavoritesModel(),
-    child: const MyApp(),
-  ));
+    runApp(ChangeNotifierProvider(
+      create: (context) => FavoritesModel(),
+      child: const MyApp(),
+    ));
+  }, (Object error, StackTrace stackTrace) {
+    log('zone error', error: error, stackTrace: stackTrace);
+  });
+}
+
+Future<void> registerModules() async {
+  final StorageModule storageModule = await StorageModule.createModule();
+
+  //await storageModule.createModule();
+
+  getIt.registerSingleton<AppDatabase>(storageModule.db);
+
+  getIt.registerSingleton<SharedPreferences>(storageModule.sharedPreferences);
+
+  getIt.registerSingleton<MovieDao>(MovieDao(getIt<AppDatabase>()));
+
+  getIt.registerSingleton<NetworkModule>(NetworkModule());
+
+  getIt.registerSingleton<MoviesApi>(MoviesApi(getIt<NetworkModule>()));
+
+  //Movie repository
+  getIt.registerSingleton<MovieRepository>(
+      MovieRepository(getIt<MoviesApi>(), getIt<MovieDao>()));
+
+  getIt.registerFactory<MoviesViewModel>(
+      () => MoviesViewModel(getIt<MovieRepository>()));
 }
 
 class MyApp extends StatelessWidget {
