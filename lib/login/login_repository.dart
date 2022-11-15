@@ -2,6 +2,8 @@ import 'package:demo1/login/session.dart';
 import 'package:demo1/login/session_token_api.dart';
 import 'package:demo1/login/token_request.dart';
 import 'package:demo1/main.dart';
+import 'package:http/http.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,7 +14,15 @@ import 'login_payload.dart';
 
 part 'login_repository.g.dart';
 
-class LoginRepository = _LoginRepository with _$LoginRepository;
+@lazySingleton
+class LoginRepository extends _LoginRepository with _$LoginRepository {
+  LoginRepository(
+      final LoginApi loginApi,
+      final GetRequestTokenApi getRequestTokenApi,
+      final SessionTokenApi sessionTokenApi,
+      final SharedPreferences sharedPreferences)
+      : super(loginApi, getRequestTokenApi, sessionTokenApi, sharedPreferences);
+}
 
 const String requestToken = 'requestToken';
 const String expiresTokenAt = 'expiredTokenAt';
@@ -21,21 +31,24 @@ const String expireSessionToken = 'expireSessionToken';
 const String sessionId = 'sessionId';
 
 abstract class _LoginRepository with Store {
-  _LoginRepository() {
+  _LoginRepository(this.loginApi, this.getRequestTokenApi, this.newSessionToken,
+      this.sharedPreferences) {
     checkAuth();
   }
 
   @observable
   bool isLoggedIn = false;
 
-  final LoginApi loginApi = LoginApi();
-  final GetRequestTokenApi getRequestTokenApi = GetRequestTokenApi();
-  final SessionTokenApi newSessionToken = SessionTokenApi();
-  final SharedPreferences sharedPreferences = getIt<SharedPreferences>();
+  final LoginApi loginApi;
+  final GetRequestTokenApi getRequestTokenApi;
+  final SessionTokenApi newSessionToken;
+  final SharedPreferences sharedPreferences;
 
   Future<bool> login(String username, String password) async {
     try {
+      checkAuth();
       final TokenRequest token = await getRequestTokenApi.getRequestToken();
+      print(token.toString());
 
       await sharedPreferences.setString(requestToken, token.value);
       await sharedPreferences.setString(

@@ -4,7 +4,9 @@ import 'package:demo1/movies/data/movies_api.dart';
 import 'package:demo1/movies/domain/movie.dart';
 import 'package:demo1/storage_module/app_database/app_database.dart';
 import 'package:drift/isolate.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class MovieRepository {
   //final MoviesApi api = getIt<MoviesApi>();
   //final MovieDao mDao = getIt<MovieDao>();

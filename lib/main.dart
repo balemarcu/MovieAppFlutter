@@ -1,6 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:demo1/injector/injector.dart';
+import 'package:demo1/login/get_request_token_api.dart';
+import 'package:demo1/login/login_api_request.dart';
+import 'package:demo1/login/login_repository.dart';
+import 'package:demo1/login/login_view_model.dart';
+import 'package:demo1/login/session_token_api.dart';
 import 'package:demo1/model/favoritesMovies.dart';
 import 'package:demo1/movies/data/movie_dao.dart';
 import 'package:demo1/movies/data/movies_api.dart';
@@ -16,16 +22,17 @@ import 'package:flutter/material.dart';
 import 'package:demo1/pages/login_page.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-GetIt getIt = GetIt.instance;
+//GetIt getIt = GetIt.instance;
 Future<void> main() async {
   runZonedGuarded(() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     await registerModules();
-
+    await configureInjection();
     runApp(ChangeNotifierProvider(
       create: (context) => FavoritesModel(),
       child: const MyApp(),
@@ -36,26 +43,48 @@ Future<void> main() async {
 }
 
 Future<void> registerModules() async {
-  final StorageModule storageModule = await StorageModule.createModule();
+  // final StorageModule storageModule = await StorageModule();
 
   //await storageModule.createModule();
 
-  getIt.registerSingleton<AppDatabase>(storageModule.db);
+  // getIt.registerSingleton<AppDatabase>(storageModule.db);
 
-  getIt.registerSingleton<SharedPreferences>(storageModule.sharedPreferences);
+  // getIt.registerSingleton<SharedPreferences>(storageModule.sharedPreferences);
 
-  getIt.registerSingleton<MovieDao>(MovieDao(getIt<AppDatabase>()));
+  // getIt.registerSingleton<MovieDao>(MovieDao(getIt<AppDatabase>()));
 
-  getIt.registerSingleton<NetworkModule>(NetworkModule());
+  //getIt.registerSingleton<NetworkModule>(NetworkModule());
 
-  getIt.registerSingleton<MoviesApi>(MoviesApi(getIt<NetworkModule>()));
+  // //final NetworkModule networkModule = NetworkModule(); todo
 
-  //Movie repository
-  getIt.registerSingleton<MovieRepository>(
-      MovieRepository(getIt<MoviesApi>(), getIt<MovieDao>()));
+  // getIt.registerSingleton<MoviesApi>(MoviesApi(getIt<NetworkModule>()));
 
-  getIt.registerFactory<MoviesViewModel>(
-      () => MoviesViewModel(getIt<MovieRepository>()));
+  // //Movie repository
+  // getIt.registerSingleton<MovieRepository>(
+  //     MovieRepository(getIt<MoviesApi>(), getIt<MovieDao>()));
+
+  // getIt.registerFactory<MoviesViewModel>(
+  //     () => MoviesViewModel(getIt<MovieRepository>()));
+
+  //--------
+  //Login
+
+  // getIt.registerSingleton<GetRequestTokenApi>(
+  //     GetRequestTokenApi(getIt<NetworkModule>()));
+
+  // getIt.registerSingleton<SessionTokenApi>(
+  //     SessionTokenApi(getIt<NetworkModule>()));
+
+  //getIt.registerSingleton<LoginApi>(LoginApi(getIt<NetworkModule>()));
+
+  // getIt.registerSingleton<LoginRepository>(LoginRepository(
+  //     getIt<LoginApi>(),
+  //     getIt<GetRequestTokenApi>(),
+  //     getIt<SessionTokenApi>(),
+  //     getIt<SharedPreferences>()));
+
+  // getIt.registerFactory<LoginViewModel>(
+  //     () => LoginViewModel(getIt<LoginRepository>()));
 }
 
 class MyApp extends StatelessWidget {

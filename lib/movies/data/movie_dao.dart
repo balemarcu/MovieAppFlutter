@@ -1,9 +1,11 @@
 import 'package:demo1/storage_module/app_database/app_database.dart';
 import 'package:demo1/storage_module/storage_module.dart';
 import 'package:http/http.dart';
+import 'package:injectable/injectable.dart';
 
 import '../domain/movie.dart';
 
+@lazySingleton
 class MovieDao {
   final AppDatabase _db;
 

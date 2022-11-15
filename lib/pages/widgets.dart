@@ -8,6 +8,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import '../injector/injector.dart';
+
 class ScrollingMovies extends StatefulWidget {
   final String? api, title;
 
@@ -78,7 +80,7 @@ class _ScrollingMoviesState extends State<ScrollingMovies> {
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        '${TMDB_BASE_IMAGE_URL}w500/${moviesList![index].posterPath!}',
+                                        '${TMDB_BASE_IMAGE_URL}w500/${moviesList![index].posterPath}',
                                     placeholder: (context, url) =>
                                         CircularProgressIndicator(),
                                     errorWidget: (context, url, error) =>

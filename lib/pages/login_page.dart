@@ -1,8 +1,10 @@
 import 'package:demo1/login/login_view_model.dart';
-import 'package:demo1/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobx/mobx.dart';
+
+import '../injector/injector.dart';
+import '../main.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -44,7 +46,7 @@ class _LoginContentState extends State<LoginContent> {
     userNameController = TextEditingController();
     passwordController = TextEditingController();
 
-    viewModel = LoginViewModel();
+    viewModel = getIt<LoginViewModel>();
     when((_) => viewModel.succesLogin, () {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         //context becomes "active"
@@ -127,7 +129,7 @@ class _LoginContentState extends State<LoginContent> {
                         onPressed: () {
                           viewModel.logIn(
                               userNameController.text, passwordController.text);
-                          context.goNamed('homescreen');
+                          //context.goNamed('homescreen');
                         },
                       ),
                     ),

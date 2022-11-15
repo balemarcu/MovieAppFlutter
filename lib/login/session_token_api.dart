@@ -1,16 +1,21 @@
 import 'package:demo1/login/session.dart';
 import 'package:demo1/login/session_request.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../networking/networking.dart';
 
+@lazySingleton
 class SessionTokenApi {
-  final NetworkModule networkModule = NetworkModule();
+  //final NetworkModule networkModule;
+
+  final Dio dio;
+  SessionTokenApi(this.dio);
 
   Future<SessionRequest> newSession(final SessionLoad load) async {
     try {
-      final response = await networkModule.dio
-          .post('/authentication/session/new', data: load.toJson());
+      final response =
+          await dio.post('/authentication/session/new', data: load.toJson());
       // print(response);
       return SessionRequest.fromJson(response.data);
     } on DioError catch (ex) {

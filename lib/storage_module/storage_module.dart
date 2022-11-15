@@ -1,30 +1,23 @@
 import 'package:demo1/storage_module/app_database/app_database.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StorageModule {
-  //static StorageModule? _storageModule;
+@module
+abstract class StorageModule {
+  //StorageModule._();
+  @preResolve
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 
-  StorageModule._();
+  // static Future<StorageModule> createModule() async {
+  //   final module = StorageModule._();
+  //   module._sharedPreference = await SharedPreferences.getInstance();
 
-  // static StorageModule getInstance() {
-  //   if (_storageModule != null) {
-  //     return _storageModule!;
-  //   }
-  //   _storageModule = StorageModule._();
-  //   return _storageModule!;
+  //   return module;
   // }
 
-  late final SharedPreferences _sharedPreference;
-
-  static Future<StorageModule> createModule() async {
-    final module = StorageModule._();
-    module._sharedPreference = await SharedPreferences.getInstance();
-    //_sharedPreference = await SharedPreferences.getInstance();
-    return module;
-  }
-
-  SharedPreferences get sharedPreferences => _sharedPreference;
-  late final AppDatabase db = AppDatabase();
+  //SharedPreferences get sharedPreferences => _sharedPreference;
+  @lazySingleton
+  AppDatabase get db => AppDatabase();
 }
 
 //create database class in storage_

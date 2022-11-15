@@ -1,14 +1,20 @@
 import 'package:demo1/login/token_request.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../networking/networking.dart';
 import 'login_payload.dart';
 
+@lazySingleton
 class LoginApi {
-  final NetworkModule networkModule = NetworkModule();
+  //final NetworkModule networkModule;
+
+  final Dio dio;
+  LoginApi(this.dio);
+
   Future<TokenRequest> login(final LoginPayload payload) async {
     try {
-      final response = await networkModule.dio.post(
+      final response = await dio.post(
           '/authentication/token/validate_with_login',
           data: payload.toJson());
       return TokenRequest.fromJson(response.data);

@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../helpers/resource.dart';
@@ -5,13 +6,16 @@ import 'login_repository.dart';
 
 part 'login_view_model.g.dart';
 
-class LoginViewModel = LoginViewModelBase with _$LoginViewModel;
+@injectable
+class LoginViewModel extends LoginViewModelBase with _$LoginViewModel {
+  LoginViewModel(final LoginRepository repository) : super(repository);
+}
 
 abstract class LoginViewModelBase with Store {
   late final LoginRepository repository;
 
-  LoginViewModelBase() {
-    repository = LoginRepository();
+  LoginViewModelBase(this.repository) {
+    //repository = LoginRepository();
   }
 
   @computed
@@ -34,6 +38,8 @@ abstract class LoginViewModelBase with Store {
         username,
         password,
       )));
+
+      print(login.data.toString());
     } catch (ex) {
       login = Resource.error(error: ex.toString());
     }
