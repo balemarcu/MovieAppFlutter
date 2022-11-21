@@ -141,4 +141,13 @@ final GoRouter _router = GoRouter(
     //       return MovieDetails(id: int.parse(state.params['movieId']!));
     //     })),
   ],
+  // redirect: (context, state) async {
+  //   final loginRepository = getIt<LoginRepository>();
+  //   if (await loginRepository.checkAuth()) {
+  //     print('auth failed on router');
+  //     return null;
+  //   } else {
+  //     return '/login';
+  //   }
+  // },
 );

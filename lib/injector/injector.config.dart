@@ -15,14 +15,15 @@ import '../login/login_api_request.dart' as _i6;
 import '../login/login_repository.dart' as _i11;
 import '../login/login_view_model.dart' as _i12;
 import '../login/session_token_api.dart' as _i9;
+import '../movie_details/presentation/movie_details_view_model.dart' as _i15;
 import '../movies/data/movie_dao.dart' as _i7;
 import '../movies/data/movies_api.dart' as _i8;
 import '../movies/data/movies_repository.dart' as _i13;
 import '../movies/presentation/movies_view_model.dart' as _i14;
-import '../networking/networking.dart' as _i16;
+import '../networking/networking.dart' as _i17;
 import '../storage_module/app_database/app_database.dart' as _i3;
 import '../storage_module/storage_module.dart'
-    as _i15; // ignore_for_file: unnecessary_lambdas
+    as _i16; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -65,9 +66,17 @@ Future<_i1.GetIt> $initGetIt(
       ));
   gh.factory<_i14.MoviesViewModel>(
       () => _i14.MoviesViewModel(get<_i13.MovieRepository>()));
+  gh.factoryParam<_i15.MovieDetailsViewModel, int, dynamic>((
+    movieId,
+    _,
+  ) =>
+      _i15.MovieDetailsViewModel(
+        get<_i13.MovieRepository>(),
+        movieId,
+      ));
   return get;
 }
 
-class _$StorageModule extends _i15.StorageModule {}
+class _$StorageModule extends _i16.StorageModule {}
 
-class _$NetworkModule extends _i16.NetworkModule {}
+class _$NetworkModule extends _i17.NetworkModule {}

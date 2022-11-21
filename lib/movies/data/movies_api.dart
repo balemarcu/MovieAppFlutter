@@ -24,4 +24,10 @@ class MoviesApi {
 
     return PopularMoviesResponse.fromJson(response.data).toDomainList();
   }
+
+  Future<Movie> getMovie({required int movieId}) async {
+    final response = await dio.get('/movie/$movieId');
+
+    return MovieResponse.fromJson(response.data).toDomain();
+  }
 }

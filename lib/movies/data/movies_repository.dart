@@ -25,4 +25,6 @@ class MovieRepository {
   Stream<List<Movie>> allMovies() {
     return mDao.watchAllMovies();
   }
+
+  Future<Movie> getMovieDetails(int movieId) => api.getMovie(movieId: movieId);
 }
