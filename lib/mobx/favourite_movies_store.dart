@@ -1,6 +1,8 @@
 import 'package:mobx/mobx.dart';
 
-import '../model/movie_model_mock.dart';
+import 'model/movie_model_mock.dart';
+
+//import '../model/movie_model_mock.dart';
 
 //include generated file
 part 'favourite_movies_store.g.dart';

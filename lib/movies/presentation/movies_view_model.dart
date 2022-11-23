@@ -1,5 +1,5 @@
 import 'package:demo1/main.dart';
-import 'package:demo1/movies/data/movies_repository.dart';
+import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:demo1/movies/domain/movie.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';

@@ -1,30 +1,36 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:demo1/injector/injector.dart';
-import 'package:demo1/login/get_request_token_api.dart';
-import 'package:demo1/login/login_api_request.dart';
-import 'package:demo1/login/login_repository.dart';
-import 'package:demo1/login/login_view_model.dart';
-import 'package:demo1/login/session_token_api.dart';
-import 'package:demo1/model/favoritesMovies.dart';
-import 'package:demo1/movies/data/movie_dao.dart';
-import 'package:demo1/movies/data/movies_api.dart';
-import 'package:demo1/movies/data/movies_repository.dart';
+//import 'package:demo1/injector/injector.dart';
+import 'package:demo1/auth/data/get_request_token_api.dart';
+//import 'package:demo1/login/login_api_request.dart';
+import 'package:demo1/auth/data/login_repository.dart';
+import 'package:demo1/auth/presentation/login_view_model.dart';
+//import 'package:demo1/login/session_token_api.dart';
+//import 'package:demo1/model/favoritesMovies.dart';
+import 'package:demo1/movies/data/dao/movie_dao.dart';
+import 'package:demo1/movies/data/api/movies_api.dart';
+import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:demo1/movies/presentation/movies_view_model.dart';
-import 'package:demo1/networking/networking.dart';
-import 'package:demo1/pages/home_screen.dart';
-import 'package:demo1/pages/movie_detail_page.dart';
-import 'package:demo1/storage_module/app_database/app_database.dart';
-import 'package:demo1/storage_module/storage_module.dart';
+import 'package:demo1/core/network/networking.dart';
+//import 'package:demo1/core/widget/home_screen.dart';
+import 'package:demo1/movie_details/presentation/movie_detail_page.dart';
+//import 'package:demo1/storage_module/app_database/app_database.dart';
+import 'package:demo1/core/storage/storage_module.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:demo1/pages/login_page.dart';
+//import 'package:demo1/pages/login_page.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+//import 'core/injector/injector.dart';
+import 'core/injector.dart';
+import 'core/widgets/home_screen.dart';
+import 'core/widgets/login_page.dart';
+import 'mobx/model/favoritesMovies.dart';
 
 //GetIt getIt = GetIt.instance;
 Future<void> main() async {
