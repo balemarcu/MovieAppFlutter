@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:demo1/movie_favourites/data/repository/favorites_movies_repository.dart';
 import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -30,12 +28,6 @@ abstract class _MovieDetailsViewModelBase with Store {
   @observable
   Resource<Movie> selectedMovie = const Resource.initial();
 
-  //the ideea is to make an computed value isFavourite that checks if the id is
-  // int he favouritesTable
-
-  // @observable
-  // ObservableStream<bool> isFavourite = false as ObservableStream<bool>;
-
   late ObservableStream<bool> isFavouriteObs =
       _favouritesMoviesRepository.isFavorite(_movieId).asObservable();
 
@@ -54,10 +46,6 @@ abstract class _MovieDetailsViewModelBase with Store {
       selectedMovie = Resource.error(error: ex.toString());
     }
   }
-
-  // Future<void> addToFavourites(Movie movie) async {
-  //   await _favouritesMoviesRepository.addFavouriteMovie(movie.id);
-  // }
 
   Future<void> toggleFavourites() async {
     if (isFavourite) {

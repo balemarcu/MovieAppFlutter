@@ -1,5 +1,4 @@
 import 'package:demo1/movie_favourites/data/repository/favorites_movies_repository.dart';
-import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
