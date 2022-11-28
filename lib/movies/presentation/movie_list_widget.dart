@@ -71,7 +71,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                       return ListView.builder(
                         //to convert this to StreamBuilder
                         physics: const BouncingScrollPhysics(),
-                        itemCount: movies?.length,
+                        itemCount: movies.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return MovieWidget(movie: movies[index]);
