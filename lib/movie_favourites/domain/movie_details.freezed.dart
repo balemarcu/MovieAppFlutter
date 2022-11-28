@@ -15,28 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$MovieDetails {
+mixin _$FavouritesMovie {
   int get movieId => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $MovieDetailsCopyWith<MovieDetails> get copyWith =>
+  $FavouritesMovieCopyWith<FavouritesMovie> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MovieDetailsCopyWith<$Res> {
-  factory $MovieDetailsCopyWith(
-          MovieDetails value, $Res Function(MovieDetails) then) =
-      _$MovieDetailsCopyWithImpl<$Res, MovieDetails>;
+abstract class $FavouritesMovieCopyWith<$Res> {
+  factory $FavouritesMovieCopyWith(
+          FavouritesMovie value, $Res Function(FavouritesMovie) then) =
+      _$FavouritesMovieCopyWithImpl<$Res, FavouritesMovie>;
   @useResult
-  $Res call({int movieId, String title});
+  $Res call({int movieId});
 }
 
 /// @nodoc
-class _$MovieDetailsCopyWithImpl<$Res, $Val extends MovieDetails>
-    implements $MovieDetailsCopyWith<$Res> {
-  _$MovieDetailsCopyWithImpl(this._value, this._then);
+class _$FavouritesMovieCopyWithImpl<$Res, $Val extends FavouritesMovie>
+    implements $FavouritesMovieCopyWith<$Res> {
+  _$FavouritesMovieCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -47,104 +46,87 @@ class _$MovieDetailsCopyWithImpl<$Res, $Val extends MovieDetails>
   @override
   $Res call({
     Object? movieId = null,
-    Object? title = null,
   }) {
     return _then(_value.copyWith(
       movieId: null == movieId
           ? _value.movieId
           : movieId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_MovieDetailsCopyWith<$Res>
-    implements $MovieDetailsCopyWith<$Res> {
-  factory _$$_MovieDetailsCopyWith(
-          _$_MovieDetails value, $Res Function(_$_MovieDetails) then) =
-      __$$_MovieDetailsCopyWithImpl<$Res>;
+abstract class _$$_FavouritesMovieCopyWith<$Res>
+    implements $FavouritesMovieCopyWith<$Res> {
+  factory _$$_FavouritesMovieCopyWith(
+          _$_FavouritesMovie value, $Res Function(_$_FavouritesMovie) then) =
+      __$$_FavouritesMovieCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int movieId, String title});
+  $Res call({int movieId});
 }
 
 /// @nodoc
-class __$$_MovieDetailsCopyWithImpl<$Res>
-    extends _$MovieDetailsCopyWithImpl<$Res, _$_MovieDetails>
-    implements _$$_MovieDetailsCopyWith<$Res> {
-  __$$_MovieDetailsCopyWithImpl(
-      _$_MovieDetails _value, $Res Function(_$_MovieDetails) _then)
+class __$$_FavouritesMovieCopyWithImpl<$Res>
+    extends _$FavouritesMovieCopyWithImpl<$Res, _$_FavouritesMovie>
+    implements _$$_FavouritesMovieCopyWith<$Res> {
+  __$$_FavouritesMovieCopyWithImpl(
+      _$_FavouritesMovie _value, $Res Function(_$_FavouritesMovie) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? movieId = null,
-    Object? title = null,
   }) {
-    return _then(_$_MovieDetails(
+    return _then(_$_FavouritesMovie(
       movieId: null == movieId
           ? _value.movieId
           : movieId // ignore: cast_nullable_to_non_nullable
               as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_MovieDetails implements _MovieDetails {
-  _$_MovieDetails({required this.movieId, required this.title});
+class _$_FavouritesMovie implements _FavouritesMovie {
+  _$_FavouritesMovie({required this.movieId});
 
   @override
   final int movieId;
-  @override
-  final String title;
 
   @override
   String toString() {
-    return 'MovieDetails(movieId: $movieId, title: $title)';
+    return 'FavouritesMovie(movieId: $movieId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MovieDetails &&
-            (identical(other.movieId, movieId) || other.movieId == movieId) &&
-            (identical(other.title, title) || other.title == title));
+            other is _$_FavouritesMovie &&
+            (identical(other.movieId, movieId) || other.movieId == movieId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, movieId, title);
+  int get hashCode => Object.hash(runtimeType, movieId);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MovieDetailsCopyWith<_$_MovieDetails> get copyWith =>
-      __$$_MovieDetailsCopyWithImpl<_$_MovieDetails>(this, _$identity);
+  _$$_FavouritesMovieCopyWith<_$_FavouritesMovie> get copyWith =>
+      __$$_FavouritesMovieCopyWithImpl<_$_FavouritesMovie>(this, _$identity);
 }
 
-abstract class _MovieDetails implements MovieDetails {
-  factory _MovieDetails(
-      {required final int movieId,
-      required final String title}) = _$_MovieDetails;
+abstract class _FavouritesMovie implements FavouritesMovie {
+  factory _FavouritesMovie({required final int movieId}) = _$_FavouritesMovie;
 
   @override
   int get movieId;
   @override
-  String get title;
-  @override
   @JsonKey(ignore: true)
-  _$$_MovieDetailsCopyWith<_$_MovieDetails> get copyWith =>
+  _$$_FavouritesMovieCopyWith<_$_FavouritesMovie> get copyWith =>
       throw _privateConstructorUsedError;
 }

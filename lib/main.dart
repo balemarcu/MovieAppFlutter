@@ -14,7 +14,7 @@ import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:demo1/movies/presentation/movies_view_model.dart';
 import 'package:demo1/core/network/networking.dart';
 //import 'package:demo1/core/widget/home_screen.dart';
-import 'package:demo1/movie_details/presentation/movie_detail_page.dart';
+import 'package:demo1/movies/presentation/movie_detail_page.dart';
 //import 'package:demo1/storage_module/app_database/app_database.dart';
 import 'package:demo1/core/storage/storage_module.dart';
 import 'package:dio/dio.dart';
@@ -118,7 +118,7 @@ class MyApp extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/',
   routes: [
     GoRoute(
       name: 'login',
@@ -147,13 +147,15 @@ final GoRouter _router = GoRouter(
     //       return MovieDetails(id: int.parse(state.params['movieId']!));
     //     })),
   ],
-  // redirect: (context, state) async {
-  //   final loginRepository = getIt<LoginRepository>();
-  //   if (await loginRepository.checkAuth()) {
-  //     print('auth failed on router');
-  //     return null;
-  //   } else {
-  //     return '/login';
-  //   }
-  // },
+  redirect: (context, state) async {
+    final loginRepository = getIt<LoginRepository>();
+    if (state.location != '/login' && !await loginRepository.checkAuth()) {
+      print('logged in failed');
+      return '/login';
+    } else {
+      print('logged in');
+      return null;
+      //return null;
+    }
+  },
 );

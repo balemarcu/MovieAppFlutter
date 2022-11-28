@@ -223,33 +223,25 @@ class $MovieTableTable extends MovieTable
   }
 }
 
-class FavouritesMoviesTableCompanion extends UpdateCompanion<MovieDetails> {
+class FavouritesMoviesTableCompanion extends UpdateCompanion<FavouritesMovie> {
   final Value<int> movieId;
-  final Value<String> title;
   const FavouritesMoviesTableCompanion({
     this.movieId = const Value.absent(),
-    this.title = const Value.absent(),
   });
   FavouritesMoviesTableCompanion.insert({
     required int movieId,
-    required String title,
-  })  : movieId = Value(movieId),
-        title = Value(title);
-  static Insertable<MovieDetails> custom({
+  }) : movieId = Value(movieId);
+  static Insertable<FavouritesMovie> custom({
     Expression<int>? movieId,
-    Expression<String>? title,
   }) {
     return RawValuesInsertable({
       if (movieId != null) 'movie_id': movieId,
-      if (title != null) 'title': title,
     });
   }
 
-  FavouritesMoviesTableCompanion copyWith(
-      {Value<int>? movieId, Value<String>? title}) {
+  FavouritesMoviesTableCompanion copyWith({Value<int>? movieId}) {
     return FavouritesMoviesTableCompanion(
       movieId: movieId ?? this.movieId,
-      title: title ?? this.title,
     );
   }
 
@@ -259,44 +251,39 @@ class FavouritesMoviesTableCompanion extends UpdateCompanion<MovieDetails> {
     if (movieId.present) {
       map['movie_id'] = Variable<int>(movieId.value);
     }
-    if (title.present) {
-      map['title'] = Variable<String>(title.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FavouritesMoviesTableCompanion(')
-          ..write('movieId: $movieId, ')
-          ..write('title: $title')
+          ..write('movieId: $movieId')
           ..write(')'))
         .toString();
   }
 }
 
-class _$MovieDetailsInsertable implements Insertable<MovieDetails> {
-  MovieDetails _object;
+class _$FavouritesMovieInsertable implements Insertable<FavouritesMovie> {
+  FavouritesMovie _object;
 
-  _$MovieDetailsInsertable(this._object);
+  _$FavouritesMovieInsertable(this._object);
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     return FavouritesMoviesTableCompanion(
       movieId: Value(_object.movieId),
-      title: Value(_object.title),
     ).toColumns(false);
   }
 }
 
-extension MovieDetailsToInsertable on MovieDetails {
-  _$MovieDetailsInsertable toInsertable() {
-    return _$MovieDetailsInsertable(this);
+extension FavouritesMovieToInsertable on FavouritesMovie {
+  _$FavouritesMovieInsertable toInsertable() {
+    return _$FavouritesMovieInsertable(this);
   }
 }
 
 class $FavouritesMoviesTableTable extends FavouritesMoviesTable
-    with TableInfo<$FavouritesMoviesTableTable, MovieDetails> {
+    with TableInfo<$FavouritesMoviesTableTable, FavouritesMovie> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -308,19 +295,14 @@ class $FavouritesMoviesTableTable extends FavouritesMoviesTable
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES movie_table (id)');
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-      'title', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [movieId, title];
+  List<GeneratedColumn> get $columns => [movieId];
   @override
   String get aliasedName => _alias ?? 'favourites_movies_table';
   @override
   String get actualTableName => 'favourites_movies_table';
   @override
-  VerificationContext validateIntegrity(Insertable<MovieDetails> instance,
+  VerificationContext validateIntegrity(Insertable<FavouritesMovie> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -330,25 +312,17 @@ class $FavouritesMoviesTableTable extends FavouritesMoviesTable
     } else if (isInserting) {
       context.missing(_movieIdMeta);
     }
-    if (data.containsKey('title')) {
-      context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
-    } else if (isInserting) {
-      context.missing(_titleMeta);
-    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
-  MovieDetails map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FavouritesMovie map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return MovieDetails(
+    return FavouritesMovie(
       movieId: attachedDatabase.options.types
           .read(DriftSqlType.int, data['${effectivePrefix}movie_id'])!,
-      title: attachedDatabase.options.types
-          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
     );
   }
 

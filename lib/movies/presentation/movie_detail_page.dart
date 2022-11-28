@@ -1,16 +1,9 @@
-//import 'package:demo1/api/endpoints.dart';
-//import 'package:demo1/api/fetch_functions.dart';
 import 'package:demo1/core/resource.dart';
-import 'package:demo1/movie_details/presentation/movie_details_view_model.dart';
+import 'package:demo1/movies/presentation/movie_details_view_model.dart';
 import 'package:demo1/movies/presentation/movie_details_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-//import '../api/api_constants.dart';
-//import '../../injector/injector.dart';
-//import '../model/movie.dart';
-import 'package:demo1/movies/domain/movie.dart';
 
 import '../../core/injector.dart';
 
@@ -45,7 +38,20 @@ class _MovieDetailsState extends State<MovieDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: viewModel.toggleFavourites,
+              //viewModel.isFavourite.value = false;
+              icon: Observer(
+                builder: (BuildContext context) => viewModel.isFavourite
+                    ? const Icon(Icons.favorite)
+                    : const Icon(Icons.favorite_border),
+              )
+              //icon: const Icon(Icons.favorite),
+              )
+        ],
+      ),
       body: Column(
         children: [
           Observer(
@@ -58,15 +64,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                   success: (value) => MovieDetailsWidget(movie: value.data));
             },
           ),
-          TextButton(
-            onPressed: () {
-              viewModel.addToFavourites(viewModel.selectedMovie.data!);
-            },
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            ),
-            child: const Text('Add to favourites'),
-          )
         ],
       ),
     );

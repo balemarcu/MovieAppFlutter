@@ -1,4 +1,3 @@
-import 'package:demo1/movie_details/data/favourites_movies_table.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:injectable/injectable.dart';
@@ -7,7 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-import '../../../movie_details/domain/movie_details.dart';
+import '../../../movie_favourites/data/favourites_movies_table.dart';
 import '../../../movies/data/movie_table.dart';
 
 //import '../../movies/data/dao/movie_dao.dart';

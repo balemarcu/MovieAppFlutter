@@ -51,7 +51,6 @@ abstract class _LoginRepository with Store {
 
   Future<bool> login(String username, String password) async {
     try {
-      checkAuth();
       final TokenRequest token = await getRequestTokenApi.getRequestToken();
       print(token.toString());
 
@@ -67,6 +66,8 @@ abstract class _LoginRepository with Store {
 
       await sharedPreferences.setString(sessionId, session.value);
 
+      //checkAuth();
+      isLoggedIn = true;
       return true;
     } catch (ex) {
       // print(ex);
@@ -92,6 +93,7 @@ abstract class _LoginRepository with Store {
     if (diff.inMilliseconds <= 0) {
       sharedPreferences.remove(requestToken);
       sharedPreferences.remove(tokenExpiredString);
+      isLoggedIn = false;
       return false;
     }
     isLoggedIn = true;

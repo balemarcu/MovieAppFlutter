@@ -3,9 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'movie_details.freezed.dart';
 
 @freezed
-class MovieDetails with _$MovieDetails {
-  factory MovieDetails({
+class FavouritesMovie with _$FavouritesMovie {
+  factory FavouritesMovie({
     required int movieId,
-    required String title,
-  }) = _MovieDetails;
+  }) = _FavouritesMovie;
 }

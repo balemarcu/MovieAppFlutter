@@ -1,5 +1,8 @@
 //import 'package:demo1/api/endpoints.dart';
+import 'package:demo1/core/injector.dart';
 import 'package:demo1/mobx/favourite_movies_store.dart';
+import 'package:demo1/movies/presentation/movie_details_view_model.dart';
+import 'package:demo1/movies/presentation/movies_view_model.dart';
 //import 'package:demo1/model/favoritesMovies.dart';
 //import 'package:demo1/model/movie_model_mock.dart';
 import 'package:demo1/movies/presentation/widgets.dart';
@@ -28,10 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Image> pageViewImages = [
     Image.asset(
-      'lib/images/carousel_placeholder.png',
+      'lib/app/images/carousel_placeholder.png',
       fit: BoxFit.fill,
     ),
-    Image.asset('lib/images/carousel_placeholder.png', fit: BoxFit.fill)
+    Image.asset('lib/app/images/carousel_placeholder.png', fit: BoxFit.fill)
   ];
 
   @override
@@ -72,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Homescreen'),
         backgroundColor: Colors.red,
-        leading: Image.asset('lib/icons/user_icon.png'),
+        leading: Image.asset('lib/app/icons/user_icon.png'),
         actions: [
           IconButton(
               onPressed: () {
@@ -138,7 +141,7 @@ class HomeTab extends StatelessWidget {
         if (index == 0) {
           return Image.asset(
             // TODO use view page
-            'lib/images/carousel_placeholder.png',
+            'lib/app/images/carousel_placeholder.png',
             fit: BoxFit.fill,
           );
           // return PageView.builder(
@@ -162,7 +165,7 @@ class HomeTab extends StatelessWidget {
               itemCount: 6,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) =>
-                  Image.asset('lib/icons/star_icon.png'),
+                  Image.asset('lib/app/icons/star_icon.png'),
             ),
           );
         } else if (index == 3) {
@@ -212,29 +215,10 @@ class FavoritesTab extends StatefulWidget {
 }
 
 class _FavoritesTabState extends State<FavoritesTab> {
+  MovieDetailsViewModel viewModel = getIt<MovieDetailsViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    //Provider version
-    // return Consumer<FavoritesModel>(builder: (context, value, child) {
-    //   return ListView.builder(
-    //     scrollDirection: Axis.vertical,
-    //     itemCount: value.favoritesMovies.length,
-    //     itemBuilder: (context, index) {
-    //       return Text(value.favoritesMovies[index].name);
-    //     },
-    //   );
-    // });
-
-    //Mobx version
-    // return ListView.builder(itemBuilder: (context, index) {
-    //   return Observer(
-    //     builder: (_) => Text(
-    //       favouriteMovies.favoriteMovies[index].name,
-    //       style: Theme.of(context).textTheme.headline4,
-    //     ),
-    //   );
-    // });
-
     return Observer(
       builder: (context) => ListView.builder(
         itemCount: favouriteMovies.favoriteMovies.length,
@@ -244,6 +228,13 @@ class _FavoritesTabState extends State<FavoritesTab> {
         ),
       ),
     );
+    // return FutureBuilder(
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //     if (snapshot.hasData) {
+    //       return ListView.builder(itemCount: viewModel.getFavouritesMovies().,);
+    //     }
+    //   },
+    // );
   }
 }
 

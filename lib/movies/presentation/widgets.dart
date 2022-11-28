@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../core/injector.dart';
+import 'movie_details_view_model.dart';
 
 // import '../../core/injector/injector.dart';
 
@@ -23,6 +24,7 @@ class ScrollingMoviesDio extends StatefulWidget {
 
 class _ScrollingMoviesDioState extends State<ScrollingMoviesDio> {
   final viewModel = getIt<MoviesViewModel>();
+  //final movieDetailsViewModel = getIt<MovieDetailsViewModel>();
   late Stream<List<Movie>> _getMovieList;
 
   @override
@@ -95,7 +97,7 @@ class _ScrollingMoviesDioState extends State<ScrollingMoviesDio> {
                                           image: NetworkImage(
                                               movies![index].posterPath),
                                           fit: BoxFit.cover,
-                                          placeholder: AssetImage(
+                                          placeholder: const AssetImage(
                                               'lib/icons/loading_gif/spinner_200px_transparent.gif'),
                                         ),
                                       ))

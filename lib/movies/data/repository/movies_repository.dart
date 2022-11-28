@@ -1,5 +1,5 @@
 import 'package:demo1/main.dart';
-import 'package:demo1/movie_details/data/favourites_movies_table.dart';
+import 'package:demo1/movie_favourites/data/favourites_movies_table.dart';
 import 'package:demo1/movies/data/dao/movie_dao.dart';
 import 'package:demo1/movies/data/api/movies_api.dart';
 import 'package:demo1/movies/domain/movie.dart';
@@ -8,7 +8,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../movie_details/data/dao/favourites_movies_dao.dart';
+import '../../../movie_favourites/data/dao/favourites_movies_dao.dart';
 
 @lazySingleton
 class MovieRepository {
@@ -32,11 +32,4 @@ class MovieRepository {
   }
 
   Future<Movie> getMovieDetails(int movieId) => api.getMovie(movieId: movieId);
-
-  Future<void> addFavouriteMovie(int movieId, String movieTitle) async {
-    await fDao.insertFavouriteMovie(MovieDetails(
-      movieId: movieId,
-      title: movieTitle,
-    ));
-  }
 }
