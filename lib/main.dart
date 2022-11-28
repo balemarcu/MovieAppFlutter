@@ -11,7 +11,7 @@ import 'package:demo1/auth/presentation/login_view_model.dart';
 import 'package:demo1/movies/data/dao/movie_dao.dart';
 import 'package:demo1/movies/data/api/movies_api.dart';
 import 'package:demo1/movies/data/repository/movies_repository.dart';
-import 'package:demo1/movies/presentation/movies_view_model.dart';
+import 'package:demo1/movies/presentation/movie_list_view_model.dart';
 import 'package:demo1/core/network/networking.dart';
 //import 'package:demo1/core/widget/home_screen.dart';
 import 'package:demo1/movies/presentation/movie_detail_page.dart';

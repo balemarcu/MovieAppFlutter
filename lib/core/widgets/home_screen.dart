@@ -2,10 +2,10 @@
 import 'package:demo1/core/injector.dart';
 import 'package:demo1/mobx/favourite_movies_store.dart';
 import 'package:demo1/movies/presentation/movie_details_view_model.dart';
-import 'package:demo1/movies/presentation/movies_view_model.dart';
+import 'package:demo1/movies/presentation/movie_list_view_model.dart';
 //import 'package:demo1/model/favoritesMovies.dart';
 //import 'package:demo1/model/movie_model_mock.dart';
-import 'package:demo1/movies/presentation/widgets.dart';
+import 'package:demo1/movies/presentation/movie_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -193,7 +193,7 @@ class HomeTab extends StatelessWidget {
           //         //return Image.network(moviePosters[index]);
           //       }),
           // );
-          return ScrollingMoviesDio(
+          return MovieListWidget(
             title: 'Popular',
             //api: Endpoints.popularMoviesUrl(1),
           );

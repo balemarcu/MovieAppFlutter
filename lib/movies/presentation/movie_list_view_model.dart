@@ -4,17 +4,18 @@ import 'package:demo1/movies/domain/movie.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
-part 'movies_view_model.g.dart';
+part 'movie_list_view_model.g.dart';
 
 @injectable
-class MoviesViewModel extends MoviesViewModelBase with _$MoviesViewModel {
-  MoviesViewModel(final MovieRepository repository) : super(repository);
+class MovieListViewModel extends MovieListViewModelBase
+    with _$MovieListViewModel {
+  MovieListViewModel(final MovieRepository repository) : super(repository);
 }
 
-abstract class MoviesViewModelBase with Store {
+abstract class MovieListViewModelBase with Store {
   final MovieRepository repository;
 
-  MoviesViewModelBase(this.repository) {
+  MovieListViewModelBase(this.repository) {
     getMovies();
   }
 
