@@ -24,7 +24,7 @@ class MovieRepository {
   Future<void> getPopularMovies({int page = 1}) async {
     final List<Movie> result = await api.getPopularMovies(page: page);
     await mDao.upsertMovie(result);
-    result.forEach((element) => print(element));
+    //result.forEach((element) => print(element));
   }
 
   Stream<List<Movie>> allMovies() {
