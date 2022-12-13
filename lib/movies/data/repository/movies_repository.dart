@@ -17,9 +17,9 @@ class MovieRepository {
 
   final MoviesApi api;
   final MovieDao mDao;
-  final FavouritesMoviesDao fDao;
+  //final FavouritesMoviesDao fDao;
 
-  MovieRepository(this.api, this.mDao, this.fDao);
+  MovieRepository(this.api, this.mDao);
 
   Future<void> getPopularMovies({int page = 1}) async {
     final List<Movie> result = await api.getPopularMovies(page: page);

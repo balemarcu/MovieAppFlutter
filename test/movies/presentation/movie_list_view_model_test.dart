@@ -1,9 +1,12 @@
+import 'package:demo1/core/storage/app_database/app_database.dart';
 import 'package:demo1/core/storage/fake_db/fake_db.dart';
+import 'package:demo1/core/storage/fake_storage_module.dart';
+import 'package:demo1/core/storage/storage_module.dart';
 import 'package:demo1/movies/data/api/models/movie_api_fake.dart';
 import 'package:demo1/movies/data/dao/movie_dao.dart';
 import 'package:demo1/movies/data/dao/movie_dao_fake.dart';
 import 'package:demo1/movies/data/repository/movies_repository.dart';
-import 'package:demo1/movies/data/repository/movies_repository_fake.dart';
+//import 'package:demo1/movies/data/repository/movies_repository_fake.dart';
 import 'package:demo1/movies/domain/movie.dart';
 import 'package:demo1/movies/presentation/movie_list_view_model.dart';
 import 'package:demo1/movies/presentation/movie_view_model.dart';
@@ -18,45 +21,48 @@ import '../../helper/async_value.dart';
 void main() {
   late MovieListViewModel movieListViewModel;
 
-  setUp(() {
-    // movieListViewModel = MovieListViewModel(repository)
+  setUpAll(() {
+    WidgetsFlutterBinding.ensureInitialized();
   });
 
-  WidgetsFlutterBinding.ensureInitialized();
-
-  Future<void> viewModelTestSetUp() async {
-    AppDatabaseFake appDatabaseFake = AppDatabaseFake(NativeDatabase.memory());
+  setUp(() {
+    AppDatabase appDatabase = FakeStorageModule().db;
 
     final MoviesApiFake moviesApiFake = MoviesApiFake();
-    final MovieDaoFake movieDaoFake = MovieDaoFake(appDatabaseFake);
+    final MovieDao movieDao = MovieDao(appDatabase);
     //final MovieDao movieDaoFake = MovieDao(appDatabaseFake);
 
-    final MovieRepositoryFake movieRepositoryFake =
-        MovieRepositoryFake(moviesApiFake, movieDaoFake);
+    final MovieRepository movieRepository =
+        MovieRepository(moviesApiFake, movieDao);
 
-    final MovieListViewModel movieListViewModel =
-        MovieListViewModel(movieRepositoryFake);
+    movieListViewModel = MovieListViewModel(movieRepository);
+  });
 
-    //moviesApiFake.getPopularMovies();
+  test('testing the creation of the movie view model', () async {
+    //viewModelTestSetUp();
+
     expect(movieListViewModel.isLoading, true);
     //expect(asyncValue((_) => vi), matcher)
 
-    //print(movieListViewModel.movieStream().first);
-    //expect(movieListViewModel.movieStream().first, matcher)
-    // test('testing if movie exists', () {
-    //   List<Movie> movies =
-    //       movieListViewModel.movieStream().toList() as List<Movie>;
-
-    //   expect(movies[0].id, '49046');
+    // movieListViewModel.movieStream().forEach((element) {
+    //   print(element);
     // });
+    // await Future.delayed(const Duration(seconds: 10));
 
-    // List<Movie> movies =
-    //     movieListViewModel.movieStream().toList() as List<Movie>;
-
-    // expect(movies[0].id, '49046');
-  }
-
-  test('testing the creation of the movie view model', () {
-    viewModelTestSetUp();
+    expect(
+        movieListViewModel.movieStream(),
+        emitsInOrder([
+          [],
+          [
+            Movie(
+                id: 49046,
+                title: 'All Quiet on the Western Front',
+                overview:
+                    'Paul Baumer and his friends Albert and Muller, egged on by romantic dreams of heroism, voluntarily enlist in the German army. Full of excitement and patriotic fervour, the boys enthusiastically march into a war they believe in. But once on the Western Front, they discover the soul-destroying horror of World War I.',
+                posterPath:
+                    'https://image.tmdb.org/t/p/w500https://image.tmdb.org/t/p/w500/hYqOjJ7Gh1fbqXrxlIao1g8ZehF.jpg',
+                releaseDate: '2022-10-07')
+          ]
+        ]));
   });
 }

@@ -1,3 +1,4 @@
+import 'package:demo1/core/resource.dart';
 import 'package:demo1/main.dart';
 import 'package:demo1/movies/data/repository/movies_repository.dart';
 import 'package:demo1/movies/domain/movie.dart';
@@ -45,4 +46,28 @@ abstract class MovieListViewModelBase with Store {
   Stream<List<Movie>> movieStream() {
     return repository.allMovies();
   }
+
+  //--------
+  // @observable
+  // Resource<List<Movie>> movies = const Resource.initial();
+
+  // late ObservableStream<List<Movie>> movieObs =
+  //     repository.allMovies().asObservable();
+
+  // @computed
+  // Resource<List<Movie>> get allMovies {
+  //   final movies = movieObs.value;
+
+  //   if (movies == null) {
+  //     return Resource.initial();
+  //   }
+
+  //   // final data = movies.map((movie) {
+  //   //   final bool 
+  //   // }).toList();
+
+  //   // if (req)
+
+  //   //return Resource.success(data: data)
+  // }
 }

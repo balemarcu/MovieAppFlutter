@@ -20,8 +20,8 @@ class MoviesApiFake implements MoviesApi {
     //throw UnimplementedError();
     final response = await rootBundle.loadString('assets/movies_db.json');
     final data = await jsonDecode(response);
-    print(data);
-    return PopularMoviesResponse.fromJson(json.decode(data)).toDomainList();
+    //print(data);
+    return PopularMoviesResponse.fromJson(data).toDomainList();
   }
 
   @override

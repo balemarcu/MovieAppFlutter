@@ -79,7 +79,6 @@ Future<_i1.GetIt> $initGetIt(
   gh.lazySingleton<_i16.MovieRepository>(() => _i16.MovieRepository(
         get<_i11.MoviesApi>(),
         get<_i9.MovieDao>(),
-        get<_i5.FavouritesMoviesDao>(),
       ));
   gh.factoryParam<_i17.MovieDetailsViewModel, int, dynamic>((
     movieId,

@@ -1,12 +1,13 @@
 import 'package:demo1/core/storage/fake_db/fake_db.dart';
 import 'package:demo1/core/storage/fake_db/fake_db.dart';
 import 'package:demo1/movies/data/dao/movie_dao.dart';
+import 'package:drift/drift.dart';
 
 import '../../../core/storage/fake_db/fake_db.dart';
 import '../../../core/storage/fake_db/fake_db.dart';
 import '../../domain/movie.dart';
 
-class MovieDaoFake implements MovieDao{
+class MovieDaoFake implements MovieDao {
   final AppDatabaseFake _db;
 
   MovieDaoFake(this._db);
@@ -27,15 +28,18 @@ class MovieDaoFake implements MovieDao{
   }
 
   Future<void> upsertMovie(final List<Movie> movies) async {
-    for (final movie in movies) {
-      await _db
-          .into(_db.movieTable)
-          .insertOnConflictUpdate(movie.toInsertable());
-    }
+    // for (final movie in movies) {
+    //   await _db
+    //       .into(_db.movieTable)
+    //       .insertOnConflictUpdate(movie.toInsertable());
+    // }
+    await _db.batch((batch) {
+      batch.insertAllOnConflictUpdate(
+          _db.movieTable, movies.map((e) => e.toInsertable()));
+    });
   }
 
   Future deleteAllMovies() {
     return _db.delete(_db.movieTable).go();
   }
-
 }

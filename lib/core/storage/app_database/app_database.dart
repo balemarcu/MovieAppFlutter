@@ -17,9 +17,9 @@ part 'app_database.g.dart';
 @DriftDatabase(tables: [MovieTable, FavouritesMoviesTable])
 // _$AppDatabase is the name of the generated class
 class AppDatabase extends _$AppDatabase {
-  AppDatabase()
+  AppDatabase(QueryExecutor queryExecutor)
       // Specify the location of the database file
-      : super(_openConnection());
+      : super(queryExecutor);
 
   // Bump this when changing tables and columns.
   // Migrations will be covered in the next part.
@@ -34,15 +34,4 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-LazyDatabase _openConnection() {
-  // // the LazyDatabase util lets us find the right location for the file async.
-  return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
 
-    //sdf
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'movies.sqlite'));
-    return NativeDatabase(file);
-  });
-}
